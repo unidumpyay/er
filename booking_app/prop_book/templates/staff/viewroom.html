@@ -1,0 +1,38 @@
+ {% extends 'basic.html' %} {% block title %}View Room {% endblock title %} {% block body %}
+<h3 class="text-success">Информация</h3>
+<hr>
+<div class="container mx-0 ">
+    <p><b>Номер: -</b> {{room.roomnumber}}</p>
+    <p><b>Тип: -</b> {{room.get_room_type_display}}</p>
+    <p><b>Площадь: -</b> {{room.capacity}} person</p>
+    <p><b>Площадь:-</b> {{room.size}} ft</p>
+    <p><b>Статус: -</b> {{room.get_status_display| capfirst}} </p>
+    <p><b>Город: -</b> {{room.hotel.location| capfirst}} </p>
+</div>
+
+
+<hr> {% if reservations %}
+<h3 class="text-success">Брони: -</h3>
+<table class="table">
+    <thead>
+        <th>Имя</th>
+        <th>Люди</th>
+        <th>Въезд</th>
+        <th>Выезд</th>
+    </thead>
+    {% for each_detail in reservations %}
+    <tr>
+        <td>{{each_detail.guest.username}}</td>
+        <td>{{each_detail.room.capacity}}</td>
+        <td>{{each_detail.check_in}}</td>
+        <td>{{each_detail.check_out}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td><b>Total bookings = </b>{{reservations | length}}</td>
+    </tr>
+
+</table>
+{% else %}
+<p>Нет информации</p>
+{% endif %} {% endblock body %}

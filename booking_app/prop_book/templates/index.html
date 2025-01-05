@@ -1,0 +1,155 @@
+    {% extends 'basic.html' %}
+    {% block title %}Апт
+    {% endblock title %}
+    {% block body %}
+     <!--booking Section starts here-->
+    <section>
+        <div class="container-fluid py-5 px-5 ">
+            <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row justify-content-center py-5 bg-light">
+                <div class="col-lg-4">
+                    <label for="">Город</label>
+                    <select class="form-control" name="search_location" id="roomstatus">
+                        <!--Hotel id and location-->
+                        <option>Location</option>
+                        {% for each_location,each_hotel_id in all_location %}
+                            
+                            <option value={{each_hotel_id}}>{{each_location}}</option>
+                        {% endfor %}    
+                        
+                        
+                            
+                    </select>
+                </div>
+                {%load app_tags%}
+                <div class="col-lg-2">
+                    <label for="">Дата Заезда</label>
+                    <input class="form-control mr-sm-2" type="date" placeholder="Check in" name="cin" min={%todays_date%} max={% max_date %} aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+                    <label for="">Дата выезда</label>
+                    <input class="form-control mr-sm-2" type="date" placeholder="Check out" name="cout" min={%tommorow%} max={% max_date%} aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+                    <label for="">Количество персон</label>
+                    <input class="form-control mr-sm-2" type="number" placeholder="Person" name="capacity" aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+
+                    <input type="submit" value="Показать" class="form-control mr-sm-2 btn btn-primary my-4" style="position: relative;top: 7px;">
+                </div>
+                {% if rooms %}
+                <p class="text-center text-success">Rooms Available</p>
+                {% endif %}
+                
+            </div>
+            </form>
+
+        </div>
+    </section>
+    <!--booking Section ends here-->
+    <!--Fetched reults appear here-->
+    <div class="container-fluid px-0 mx-aut">
+        {% if rooms %}
+           <table class="table">
+               <thead class="o">
+                <th>Тип</th>
+                <th>Город</th>
+                <th>Человек</th>
+                <th>Стоимость</th>
+                <th>Действия</th>
+            </thead>
+            {% for r in rooms %}
+                <tr class="">
+                <td>{{ r.get_room_type_display }}</td>
+                <td>{{ r.hotel.location }}</td>
+                <td>{{ r.capacity }}</td>
+                <td>{{ r.price }}</td>
+                
+                <td><a href="/user/book-room?roomid={{r.id}}"><button class="btn btn-warning">Забронировать</button></a></td>
+                </tr>
+            {% endfor %}
+            
+           </table> 
+        {% endif %}
+    </div>
+    <!--Fetched results ends here-->
+
+
+    <h3 class="text-center text-dark">Апартаменты</h3>
+
+    <!--Room tables starts here-->
+    <div class="container-fluid px-0" style="border:1px solid red">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Подробности</th>
+                    <th class="text-center">Фото</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Недорогие</h1>
+                        <p>Стоимость:2000₽/день</p>
+
+                        <p>Площадь: 16квм</p>
+                        <p>Кол-во человек: 1-2</p>
+
+                        <p>Удобства: Wi-Fi, ТВ, Своя ванная</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                        <img src="https://s.101hotelscdn.ru/uploads/image/hotel_image/667243/5273428.jpg" alt="" class="img-fluid" style="max-width: 300px; max-height: 200px; object-fit: cover;">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Комфорт+</h1>
+                        <p>Стоимость: 3000-4000₽/день</p>
+
+                        <p>Площадь: 30квм</p>
+                        <p>Кол-во человек: 2-3</p>
+
+                        <p>Удобсвта: Wi-Fi, ТВ, Своя ванная</p>
+                        <p> Вид: На воду</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                         <img src="https://s.101hotelscdn.ru/uploads/image/hotel_image/650558/1940210.jpg" alt="" class="img-fluid" style="max-width: 300px; max-height: 200px; object-fit: cover;">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Роскошные</h1>
+                        <p>Стоимость: 5000+₽/день</p>
+
+                        <p>Площадь: 45+ квм</p>
+                        <p>Кол-во человек: 2-4</p>
+
+                        <p>Удобсвта: Wi-Fi, ТВ, Своя ванная, Завтрак входит в стоимость</p>
+                        <p> Вид: На Воду, На Лес</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                        <img src="https://chistye-prudy.ru/upload/iblock/dd3/s8ng1pn80d63s5oy7pvfrl0i4mfq3qkp.jpg" alt="" class="img-fluid" style="max-width: 300px; max-height: 200px; object-fit: cover;">
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--Roo tables ends here-->
+
+    
+    {% endblock body %}
+   
+   
